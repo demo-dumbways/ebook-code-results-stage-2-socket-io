@@ -78,13 +78,17 @@ const socketIo = (io) => {
         customerContacts = JSON.parse(JSON.stringify(customerContacts))
         customerContacts = customerContacts.map(item => ({
           ...item,
-          image: item.image ? process.env.PATH_FILE + item.image : null
+          image: item.profile?.image ? process.env.PATH_FILE + item.profile?.image : null
         }))
         
         socket.emit("customer contacts", customerContacts)
       } catch (err) {
         console.log(err)
       }
+    })
+
+    socket.on("disconnect", () => {
+      console.log("client disconnect")
     })
   })
 }
