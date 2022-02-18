@@ -1,28 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbar';
 
-// import socket.io-client 
-import {io} from 'socket.io-client'
+// import socket.io-client
+import { io } from 'socket.io-client';
 
 // initial variable outside socket
-let socket
+let socket;
+
 export default function Complain() {
+  const title = 'Complain';
+  document.title = 'DumbMerch | ' + title;
 
-    const title = "Complain"
-    document.title = 'DumbMerch | ' + title
+  useEffect(() => {
+    socket = io(process.env.REACT_APP_SERVER_URL || 'http://localhost:5000');
 
-    useEffect(() =>{
-        socket = io('http://localhost:5000')
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
-        return () => {
-            socket.disconnect()
-        }
-    }, [])
-    
-    return (
-        <>
-            <Navbar title={title} />
-        </>
-    )
+  return (
+    <>
+      <Navbar title={title} />
+    </>
+  );
 }
